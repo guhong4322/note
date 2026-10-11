@@ -291,3 +291,527 @@
 > 5. 使用场景：一些较小的图片，或者需要和网页一起加载的图片。
 ---
 ## 2.8 超链接
+> 主要作用：从当前页面进行跳转。<br>
+>可以实现：①跳转到指定页面、②跳转到指定文件（也可触发下载）、③跳转到锚点位置、④唤起指定应用.
+
+### 2.8.1 标签a
+| 标签名 | 标签语义 | 单/双标签 |
+| --- | --- | ---|
+| a| 超链接 | 双 |
+
+| 属性 | 说明 |
+|---|---|
+| `href` | 目标地址（**必填**），指定要跳转到的具体目标。 |
+| `target` | 控制跳转时如何打开页面，常用值如下:`_blank`、`_self`。 |
+| `id` | 元素唯一标识，可用于设置锚点。 |
+| `name` | 元素的名字，写在a标签中，也能设置锚点。 |
+
+>`_blank`：在新窗口打开(**默认**)。
+>`_self`：在本窗口打开。
+
+### 2.8.2 转跳界面
+
+```html
+<!-- 跳转其他网页 -->
+<a href="https://www.jd.com/" target="_blank">去京东</a>
+<!-- 跳转本地网页 -->
+<a href="./10_HTML排版标签.html" target="_self">去看排版标签</a>
+```
+- 注意点：
+1. 代码中的多个空格、多个回车，都会被浏览器解析成一个空格！
+2. 虽然a是行内元素，但a元素可以包裹除它自身外的任何元素！
+3. `href="#"` 会跳到页面顶部。
+4. 用 `target="_blank"` 时建议**同时加 `rel="noopener"`**：防止新页面通过 `window.opener` 操作你的页面（安全 + 性能）。
+
+### 2.8.3 跳转到文件
+```html
+<!-- 浏览器能直接打开的文件 -->
+<a href="./resource/自拍.jpg">看自拍</a>
+<a href="./resource/小电影.mp4">看小电影</a>
+<a href="./resource/小姐姐.gif">看小姐姐</a>
+<a href="./resource/如何一夜暴富.pdf">点我一夜暴富</a>
+
+<!-- 浏览器不能打开的文件，会自动触发下载 -->
+<a href="./resource/内部资源.zip">内部资源</a>
+
+<!-- 强制触发下载 -->
+<a href="./resource/小电影.mp4" download="电影片段.mp4">下载电影</a>
+```
+- 注意点：
+1. 若浏览器无法打开文件，则会引导用户下载。
+2. 若想强制触发下载，请使用download 属性，属性值即为下载文件的名称。
+
+### 2.8.4 转跳锚点
+> 什么是锚点？—— 网页中的一个标记点。
+
+#### 第一步：设置锚点
+```html
+<!-- 第一种方式：a标签配合name属性 -->
+<a name="test1"></a>
+
+<!-- 第二种方式：其他标签配合id属性 -->
+<h2 id="test2">我是一个位置</h2>
+```
+
+- 注意点：
+1. 具有 href 属性的 a标签是超链接，具有name 属性的 a标签是锚点。
+2. name 和id都是区分大小写的，且id 最好别是数字开头。
+
+#### 第二步：转跳锚点
+```html
+<!-- 跳转到test1锚点-->
+<a href="#test1">去test1锚点</a>
+
+<!-- 跳到本页面顶部 -->
+<a href="#">回到顶部</a>
+
+<!-- 跳转到其他页面锚点 -->
+<a href="demo.html#test1">去demo.html页面的test1锚点</a>
+
+<!-- 刷新本页面 -->
+<a href="">刷新本页面</a>
+
+<!-- 执行一段js,如果还不知道执行什么，可以留空，javascript:; -->
+<a href="javascript:alert(1);">点我弹窗</a>
+```
+### 2.8.5 唤起指定应用
+> 通过 a 标签，可以唤起设备应用程序。
+```html
+<!-- 唤起设备拨号 -->
+<a href="tel:10010">电话联系</a>
+
+<!-- 唤起设备发送邮件 -->
+<a href="mailto:10010@qq.com">邮件联系</a>
+
+<!-- 唤起设备发送短信 -->
+<a href="sms:10086">短信联系</a>
+```
+
+| scheme | 唤起 |
+|---|---|
+| `tel:` | 拨号（手机端有效） |
+| `mailto:` | 邮件客户端（可带 `?subject=` 主题、`&body=` 正文） |
+| `sms:` | 短信 |
+
+---
+## 3.1 列表
+
+#### 3.1.1 有序列表
+> 概念：有顺序或侧重顺序的列表.
+```html
+<h2>要把大象放冰箱总共分几步</h2>
+<ol>
+    <li>把冰箱门打开</li>
+    <li>把大象放进去</li>
+    <li>把冰箱门关上</li>
+</ol>
+```
+
+### 3.1.2 无序列表
+> 概念： 无顺序或不侧重顺序的列表
+```html
+<h2>我想去的几个城市</h2>
+<ul>
+    <li>成都</li>
+    <li>上海</li>
+    <li>西安</li>
+    <li>武汉</li>
+</ul>
+```
+
+### 3.1.3 自定义列表
+> 概念：所谓自定义列表，就是一个包含**术语名称**以及**术语描述**的列表。<br>
+> 一个dl就是一个自定义列表，一个dt 就是一个术语名称，一个dd就是术语描述（可以有多个）。
+``` html
+<h2>如何高效的学习？</h2>
+<dl>
+    <dt>做好笔记</dt>
+    <dd>笔记是我们以后复习的一个抓手</dd>
+    <dd>笔记可以是电子版，也可以是纸质版</dd>
+    <dt>多加练习</dt>
+    <dd>只有敲出来的代码，才是自己的</dd>
+    <dt>别怕出错</dt>
+    <dd>错很正常，改正后并记住，就是经验</dd>
+</dl>
+```
+
+### 3.1.4 列表嵌套
+> 概念： 列表中的某项内容，又包含了一个列表（注意：嵌套时，请务必把结构写完整）。
+```html
+<h2>我想去的几个城市</h2>
+<ul>
+    <li>成都</li>
+    <li>
+        <span>上海</span>
+        <ul>
+            <li>外滩</li>
+            <li>杜莎夫人蜡像馆</li>
+            <li>
+                <a href="https://www.opg.cn/">东方明珠</a>
+            </li>
+            <li>迪士尼乐园</li>
+        </ul>
+    </li>
+    <li>西安</li>
+    <li>武汉</li>
+</ul>
+```
+- 注意点：
+1. li 标签最好写在 ul 或 ol 中，不要单独使用。
+2. **`ul` / `ol` 的直接子元素只能是 `li`**，不能直接塞 `div`、`p`
+3. **`dl` 的直接子元素只能是 `dt` / `dd`**（HTML5 允许用一层 `div` 包裹分组）。
+
+  ---
+## 3.2 表格
+
+### 3.2.1 基本格式
+> 一个完整的表格由：表格标题、表格头部、表格主体、表格脚注，四部分组成。
+
+```html
+<table>
+    <caption>学生信息表</caption>
+    <thead>
+        <tr><th>姓名</th><th>年龄</th></tr>
+    </thead>
+    <tbody>
+        <tr><td>张三</td><td>20</td></tr>
+        <tr><td>李四</td><td>21</td></tr>
+    </tbody>
+    <tfoot>
+        <tr><td>共 2 人</td><td>平均 20.5</td></tr>
+    </tfoot>
+</table>
+```
+
+| 标签名 | 含义 |
+| --- | --- |
+| table | 表格 |
+| caption | 表格标题 |
+| thead | 表格头部 |
+| tbody | 表格主题 |
+| tfoot | 表格注脚 |
+| tr | 每一行 |
+| th | 每一个单元格（表头中使用） |
+| td | 每一个单元格（主体和脚注中使用） |
+
+### 3.2.2 常用属性
+
+#### 1. table
+| 写在 `table` 上 | 作用 |
+|---|---|
+| `width`  | 表格宽度 |
+| `height` | 表格高度 |
+| `border` | 边框粗细 |
+| `cellspacing` | 单元格之间的间隙 |
+| `cellpadding` | 内容与边框的距离 |
+| `align` | 对齐方式 |
+
+#### 2. thead
+| 写在 `thead`上 | 作用 |
+|---|---|
+| `height` | 表格头部高度 |
+| `valign` | 垂直对齐方式 |
+| `align` | 水平对齐方式 |
+- align： 设置单元格的水平对齐方式，可选值如下：
+1. left：左对齐
+2. center：中间对齐
+3. right：右对齐
+- valign：设置单元格的垂直对齐方式，可选值如下：
+1. top：顶部对齐
+2. middle：中间对齐
+3. bottom：底部对
+
+#### 3. tbody
+> 常用属性与thead相同
+
+#### 4. tr
+> 常用属性与thead相同
+
+#### 5. tfoot
+> 常用属性与thead相同
+
+#### 6. td
+| 写在 `th` 上 | 作用 |
+|---|---|
+| `width`  | 设置单元格宽度，同列所有单元格全都受影响。 |
+| `height` | 设置单元格的高度，同行所有单元格全都受影响。 |
+| `align` | 设置单元格的水平对齐方式。 |
+| `valign` | 设置单元格的垂直对齐方式。 |
+| `rowspan` | 指定要跨的行数。 |
+| `colspan` | 指定要跨的列数。 |
+
+#### 7. th
+> 常用属性与td相同。
+
+- 注意点：
+1. <table>元素的border属性可以控制表格边框，但border值的大小，并不控制单元格边框的宽度，只能控制表格最外侧边框的宽度。
+2. 默认情况下，每列的宽度，得看这一列单元格最长的那个文字。
+3. 给某个th或td设置了宽度之后，他们所在的那一列的宽度就确定了。
+4. 给某个th或td设置了高度之后，他们所在的那一行的高度就确定了。
+
+---
+## 3.3 常用标签补充
+
+| 标签 | 作用 | 说明 | 单 /双标签 |
+|---|---|---| --- |
+| `<br>` | 强制换行（单标签） | 只在段落内换行用，别用来撑间距 | 单 |
+| `<hr>` | 水平分隔线（单标签） | 语义是"主题的分隔" | 单 |
+| `<pre>` | 预格式化，保留空格和换行 | 默认等宽字体，放代码、ASCII 图 | 双 |
+| `<small>` | 小号字 | 版权、免责声明 | 双 |
+| `<bdo>` | 指定文字方向 | `dir="rtl"` 从右到左 | 双 |
+
+- 注意点：
+1. 不要用 <br>来增加文本之间的行间隔，应使用<p> 元素，或后面即将学到的 CSS margin 属性。
+2. <hr>的语义是分隔，如果不想要语义，只是想画一条水平线，那么应当使用CSS完成。
+
+## 3.4 表单
+> 概念：一个包含交互的区域，用于收集用户提供的数据。
+
+### 3.4.1 基本结构
+
+```html
+<form action="https://www.baidu.com/s" target="_blank" method="get">
+    <input type="text" name="wd">
+    <button>去百度搜索</button>
+</form>
+```
+
+| 标签名 | 标签语义 | 单/双标签 |
+| --- | --- | ---|
+| form | 表单 | 双 |
+| input | 输入框 | 单 |
+| button | 表单 | 双 |
+
+> `form` 是一个容器，负责把里面的数据**打包发给服务器**。
+### 3.4.2 常用表单控件
+#### 1.文本输入框
+```html
+<input type="text">
+```
+| 常用属性 | 说明 |
+|---|---|
+| `name` | 数据的名称。 |
+| `value` | 输入框的默认输入值。 |
+| `maxlength` | 输入框最大可输入长度。 |
+| `placeholder` | 灰色提示文字，用户一输入就消失，**不提交** |
+
+#### 2. 密码输入框
+```html
+<input type="password">
+```
+
+| 常用属性 | 说明 |
+|---|---|
+| `name` | 数据的名称。 |
+| `value` | 输入框的默认输入值。 |
+| `maxlength` | 输入框最大可输入长度。 |
+| `placeholder` | 灰色提示文字，用户一输入就消失，**不提交** |
+
+#### 3. 单选框
+```html
+<input type="radio" name="sex" value="female">女
+<input type="radio" name="sex" value="male">男
+```
+
+| 常用属性 | 说明 |
+|---|---|
+| `name` | 数据的名称，注意：想要单选效果，多个radio的 name 属性值要保持一致。 |
+| `value` | 提交的数据值。 |
+| `checked` | 让该单选按钮默认选中。 |
+
+#### 4. 复选框
+```html
+<input type="checkbox" name="hobby" value="smoke">抽烟
+<input type="checkbox" name="hobby" value="drink">喝酒
+<input type="checkbox" name="hobby" value="perm">烫头
+```
+
+| 常用属性 | 说明 |
+|---|---|
+| `name` | 数据的名称。 |
+| `value` | 提交的数据值。 |
+| `checked` | 让该复选框默认选中。 |
+
+#### 5. 隐藏域
+> 用户不可见的一个输入区域，作用是： 提交表单的时候，携带一些固定的数据。
+```html
+<input type="hidden" name="tag" value="100">
+```
+| 常用属性 | 说明 |
+|---|---|
+| `name` | 指定数据的名称。 |
+| `value` | 指定的是真正提交的数据。 |
+
+#### 6. 提交按钮
+```html
+<input type="submit" value="点我提交表单">
+<button>点我提交表单</button>
+```
+- 注意：
+1. button 标签 type 属性的默认值是 submit。
+2. button不要指定name 属性。
+3. input标签编写的按钮，使用value属性指定按钮文字。
+
+#### 7. 重置按钮
+```html
+<input type="reset" value="点我重置">
+<button type="reset">点我重置</button>
+```
+- 注意点：
+1. button不要指定name 属性。
+2. input标签编写的按钮，使用value属性指定按钮文字。
+
+#### 8. 普通按钮
+```html
+<input type="button" value="普通按钮">
+<button type="button">普通按钮</button>
+```
+- 注意点：普通按钮的type值为button，若不写type值是submit会引起表单的提交。
+
+#### 9. 文本域
+```html
+<textarea name="msg" rows="22" cols="3">我是文本域</textarea>
+```
+- 常用属性如下：
+1. rows 属性：指定默认显示的行数，会影响文本域的高度。
+2. cols 属性：指定默认显示的列数，会影响文本域的宽度。
+3. 不能编写type属性，其他属性，与普通文本输入框一致。
+#### 10. 下拉框
+```html
+<select name="from">
+    <option value="黑">黑龙江</option>
+    <option value="辽">辽宁</option>
+    <option value="吉">吉林</option>
+    <option value="粤" selected>广东</option>
+</select>
+```
+- 常用属性及注意事项：
+1. name 属性：指定数据的名称。
+2. option 标签设置value 属性， 如果没有value 属性，提交的数据是option 中间的文字；如果设置了value 属性，提交的数据就是value 的值（建议设置 value 属性）
+3. option 标签设置了selected 属性，表示默认选中。
+
+### 3.4.3 禁用表单控制
+> 给表单控件的标签设置 disabled 既可禁用表单控件。<br>
+> input 、textarea 、button 、select 、option 都可以设置isabled 属性.
+
+### 3.4.4 label 标签
+> 作用：把"文字"和"控件"关联起来，**点文字等于点控件**（点击区域变大，屏幕阅读器也能正确朗读）。
+```html
+<!-- 写法一（推荐）：for 对应控件的 id -->
+<label for="username">用户名：</label>
+<input type="text" id="username" name="username">
+
+<!-- 写法二（包裹式）：不用写 for 和 id -->
+<label>用户名：<input type="text" name="username"></label>
+
+<!-- 单选框配上 label，点"男"字就能选中 -->
+<input type="radio" name="sex" value="m" id="male">
+<label for="male">男</label>
+```
+- 注意点：
+1. `for` 后面必须跟 `id`，不是 `name`**！写成 `for="username"` 但控件只有 `name="username"` 没有 id，点文字完全没反应。
+2. 让`label` 标签的`for` 属性的值等于表单控件的`id`。
+3. 把表单控件套在 `label` 标签的里面。
+
+### 3.4.5 fieldset 与 legend 的使用（了解）
+> `fieldset` 可以为表单控件分组、`legend` 标签是分组的标题。
+```html
+<fieldset>
+    <legend>性别</legend>
+    <label><input type="radio" name="sex" value="m">男</label>
+    <label><input type="radio" name="sex" value="f">女</label>
+</fieldset>
+
+<fieldset>
+    <legend>收货信息</legend>
+    <label>姓名：<input type="text" name="name"></label>
+    <label>电话：<input type="text" name="tel"></label>
+</fieldset>
+```
+### 3.5.6 总结
+```html
+<form action="/submit" method="post">
+    <fieldset>
+        <legend>基本信息</legend>
+        <label for="u">用户名：</label><input id="u" type="text" name="username">
+        <label for="p">密码：</label><input id="p" type="password" name="pwd">
+    </fieldset>
+    <input type="hidden" name="from" value="register">
+    <button type="submit">注册</button>
+    <button type="reset">重置</button>
+</form>
+```
+
+
+- `fieldset`：把**一组相关控件**包起来，浏览器默认画一个边框。
+- `legend`：这一组的标题，显示在边框的左上角缺口处。
+- 无障碍加分：屏幕阅读器会把 `legend` 当作这一整组控件的说明来朗读。
+
+---
+
+#### 1. `form` —— 表单
+
+| 属性 | 作用 | 常用值 |
+| --- | --- | --- |
+| `action` | 表单要提交的地址 | URL 地址 |
+| `target` | 要跳转的新地址打开位置 | `_self`、`_blank` |
+| `method` | 请求方式 | `get`、`post` |
+
+#### 2. `input` —— 多种形式的表单控件
+
+| 属性 | 作用 | 常用值 |
+| --- | --- | --- |
+| `type` | 指定表单控件的类型 | `text`、`password`、`radio`、`checkbox`、`hidden`、`submit`、`reset`、`button` 等 |
+| `name` | 指定数据名称 | 自定义名称 |
+| `value` | 对于输入框：指定默认输入的值；<br>对于单选和复选框：实际提交的数据；<br>对于按钮：显示按钮文字 | 自定义内容 |
+| `disabled` | 设置表单控件不可用 | 无 |
+| `maxlength` | 用于输入框，设置最大可输入长度 | 数字 |
+| `checked` | 用于单选按钮和复选框，默认选中 | 无 |
+
+#### 3. `textarea` —— 文本域
+
+| 属性 | 作用 | 常用值 |
+| --- | --- | --- |
+| `name` | 指定数据名称 | 自定义名称 |
+| `rows` | 指定默认显示的行数，影响文本域的高度 | 数字 |
+| `cols` | 指定默认显示的列数，影响文本域的宽度 | 数字 |
+| `disabled` | 设置表单控件不可用 | 无 |
+
+#### 4. `select` —— 下拉框
+
+| 属性 | 作用 | 常用值 |
+| --- | --- | --- |
+| `name` | 指定数据名称 | 自定义名称 |
+| `disabled` | 设置整个下拉框不可用 | 无 |
+
+#### 5. `option` —— 下拉框的选项
+
+| 属性 | 作用 | 常用值 |
+| --- | --- | --- |
+| `disabled` | 设置该下拉选项不可用 | 无 |
+| `value` | 该选项实际提交的数据（不指定 `value`，会把标签中的内容作为提交数据） | 自定义内容 |
+| `selected` | 默认选中 | 无 |
+
+#### 6. `button` —— 按钮
+
+| 属性 | 作用 | 常用值 |
+| --- | --- | --- |
+| `disabled` | 设置按钮不可用 | 无 |
+| `type` | 设置按钮的类型 | `submit`（默认）、`reset`、`button` |
+
+#### 7. `label` —— 与表单控件做关联
+
+| 属性 | 作用 | 常用值 |
+| --- | --- | --- |
+| `for` | 值与要关联的表单控件的 ID 值相同 | 对应控件的 `id` |
+
+#### 8. `type`
+| type | 控件 | type | 控件 |
+|---|---|---|---|
+| `text` | 文本框 | `submit` | 提交按钮 |
+| `password` | 密码框 | `reset` | 重置按钮 |
+| `radio` | 单选框 | `button` | 普通按钮 |
+| `checkbox` | 多选框 | `file` | 文件选择 |
+| `hidden` | 隐藏域 | `email` / `date` / `number` | HTML5 新类型 |
+
+## 3.5 框架标签
