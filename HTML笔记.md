@@ -815,3 +815,113 @@
 | `hidden` | 隐藏域 | `email` / `date` / `number` | HTML5 新类型 |
 
 ## 3.5 框架标签
+```html
+<iframe src="https://www.xxx.com" width="600" height="400" frameborder="0"></iframe>
+```
+**与超链接联动（重点）**：
+
+```html
+<iframe name="container" src="default.html" width="800" height="500"></iframe>
+<a href="page1.html" target="container">打开页面一</a>
+<a href="page2.html" target="container">打开页面二</a>
+```
+
+| 标签名 | 标签语义 | 单/双标签 |
+| --- | --- | ---|
+| iframe | 框架（在网页中嵌入其他文件） | 双 |
+
+| 属性 | 说明 |
+|---|---|
+| `src` | 嵌入的页面地址 |
+| `width` / `height` | 尺寸 |
+| `name` | 给框架起名字，配合超链接的 target 使用 |
+| `frameborder` | 边框，0 为无边框（**已废弃，用 CSS `border: none`**） |
+| `loading="lazy"` | 懒加载，滚动到才加载 |
+| `allowfullscreen` | 允许全屏 |
+
+- `iframe`标签的实际应用
+  1. 在网页中嵌入广告。
+  2. 与超链接或表单的 target 配合，展示不同的内容。
+
+---
+## 3.6 实体  
+> 在HTML中我们可以用一种特殊的形式的内容，来表示某个符号，这种特殊形式的内容，就是HTML 实
+> 体。比如小于号 < 用于定义 HTML 标签的开始。如果我们希望浏览器正确地显示这些字符，我们必须
+> 在HTML 源码中插入字符实体.
+
+- 字符实体由三部分组成：一个&和 一个实体名称（或者一个# 和 一个实体编号），最后加上一个分号;。
+
+| 字符 | 描述 | 实体名称 | 实体编号 |
+| --- | --- | --- | --- |
+| （空格） | 空格 | `&nbsp;` | `&#160;` |
+| `<` | 小于号 | `&lt;` | `&#60;` |
+| `>` | 大于号 | `&gt;` | `&#62;` |
+| `&` | 和号 | `&amp;` | `&#38;` |
+| `"` | 引号 | `&quot;` | `&#34;` |
+| `´` | 反引号 | `&acute;` | `&#180;` |
+| `¢` | 分（cent） | `&cent;` | `&#162;` |
+| `£` | 镑（pound） | `&pound;` | `&#163;` |
+| `¥` | 元（yen） | `&yen;` | `&#165;` |
+| `€` | 欧元（euro） | `&euro;` | `&#8364;` |
+| `©` | 版权（copyright） | `&copy;` | `&#169;` |
+| `®` | 注册商标 | `&reg;` | `&#174;` |
+| `™` | 商标 | `&trade;` | `&#8482;` |
+| `×` | 乘号 | `&times;` | `&#215;` |
+| `÷` | 除号 | `&divide;` | `&#247;` |
+> 完整实体列表，请参考：HTML Standard (whatwg.org)
+
+---
+## 3.6 全局属性
+
+| 属性 | 作用 |
+|---|---|
+| `id` | 唯一标识，**页面内不能重复** |
+| `class` | 类名，**可以重复**，多个用空格 `class="box red"` |
+| `style` | 行内样式，优先级最高（尽量少用） |
+| `title` | 鼠标悬停时的提示文字 |
+| `lang` | 语言（见 018） |
+| `dir` | 文字方向 `ltr` / `rtl` |
+| `hidden` | 隐藏元素（等价 `display:none`），JS 可切换 |
+| `tabindex` | Tab 键聚焦顺序；`0` 按文档顺序，负数表示不可 Tab 聚焦 |
+| `data-*` | **自定义数据**，见下 |
+| `contenteditable` | 让元素可编辑 |
+> 完整的全局属性，请参考：全局属性 - HTML（超文本标记语言） | MDN (mozilla.org)
+
+---
+### 3.7 meta元信息
+> `meta` 写在 `<head>` 里，描述**页面本身的信息**，内容不显示。
+```html
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="这是一个前端学习站点">
+    <meta name="keywords" content="HTML,CSS,JavaScript">
+    <title>页面标题</title>
+</head>
+```
+| 类型 | 写法 | 说明 |
+|---|---|---|
+| 字符编码 | `<meta charset="UTF-8">` | 见前 |
+| 针对IE浏览器的兼容性配置 | `<meta http-equiv="X-UA-Compatible" content="IE=edge">` | 现在不常用 |
+| 移动端视口 | `<meta name="viewport" content="width=device-width, initial-scale=1.0">` | **移动端必备**，不写手机上字会很小 |
+| 配置网页描述信息(SEO) | `<meta name="description" content="80字以内的一段话，与网站内容相关">` | 搜索结果里显示的那段话 |
+| 配置网页关键词 | `<meta name="keywords" content="8-12个以英文逗号隔开的单词/词语">"` | 现代搜索引擎基本不看，写上无害 |
+| 针对搜索引擎爬虫配置 | <meta name="robots" content="此处可选值见下表"> | 目前用不到 |
+| 自动跳转 | `<meta http-equiv="refresh" content="3;url=https://...">` | 3 秒后跳转，少用 |
+| 配置网页作者 | <meta name="author" content="tony"> | 常用 |
+| 配置网页生成工具 | <meta name="generator" content="Visual Studio Code"> | 目前用不到 |
+| 配置定义网页版权信息 | <meta name="copyright" content="2023-2027©版权所有"> | 常用 |
+
+---
+
+| 值 | 描述 |
+| --- | --- |
+| `index` | 允许搜索爬虫索引此页面。 |
+| `noindex` | 要求搜索爬虫不索引此页面。 |
+| `follow` | 允许搜索爬虫跟随此页面上的链接。 |
+| `nofollow` | 要求搜索爬虫不跟随此页面上的链接。 |
+| `all` | 与 `index`、`follow` 等价。 |
+| `none` | 与 `noindex`、`nofollow` 等价。 |
+| `noarchive` | 要求搜索引擎不缓存页面内容。 |
+| `nocache` | `noarchive` 的替代名称。 |
+
